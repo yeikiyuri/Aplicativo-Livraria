@@ -1,3 +1,3 @@
-# app_projeto
+# Aplicativo Livraria
 
-A new Flutter project.
+Um aplicativo que simula uma loja virtual de uma livraria utilizando Flutter e Dart.
