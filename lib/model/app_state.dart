@@ -22,13 +22,10 @@ class AppState extends ChangeNotifier {
 
   Map<String,String>? _currentUser;
   Map<String,String>? get currentUser => _currentUser == null ? null : Map.unmodifiable(_currentUser!);
-  final Set<String> _favoriteIds = {};
   final Map<String,int> _cart = {};
-  List<Book> get favorites => books.where((b)=>_favoriteIds.contains(b.id)).toList();
   Map<String,int> get cart => Map.unmodifiable(_cart);
   int get cartCount => _cart.values.fold(0,(a,b)=>a+b);
   double get cartTotal => _cart.entries.fold(0.0,(sum,e)=>sum + books.firstWhere((b)=>b.id==e.key).price*e.value);
-  bool isFavorite(Book b)=>_favoriteIds.contains(b.id);
 
   String? login(String email,String password) {
     if(email.trim().isEmpty || password.isEmpty) return 'Preencha e-mail e senha.';
@@ -69,9 +66,6 @@ class AppState extends ChangeNotifier {
     return null;
   }
   
-  void toggleFavorite(Book b) { 
-    if(!_favoriteIds.add(b.id)) _favoriteIds.remove(b.id); notifyListeners(); 
-  }
   void addToCart(Book b) { 
     _cart.update(b.id,(n)=>n+1,ifAbsent:()=>1); notifyListeners(); 
   }
@@ -89,4 +83,19 @@ class AppState extends ChangeNotifier {
     _currentUser=null; 
     notifyListeners(); 
   }
+
+void setAuthenticatedUser({
+  required String name,
+  required String email,
+  required String phone,
+}) {
+  _currentUser = {
+    'name': name,
+    'email': email,
+    'phone': phone,
+  };
+
+  notifyListeners();
+}
+
 }

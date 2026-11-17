@@ -25,15 +25,34 @@ class _CadastroUsuarioViewState extends State<CadastroUsuarioView>{
     super.dispose(); 
   }
 
-  void _cadastrar(){
-    if(!_form.currentState!.validate())return;
-    final e=_controller.cadastrar(_nome.text,_email.text,_fone.text,_senha.text,_conf.text);
-    if(e!=null){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(e)));
-      return;
-    }
-    Navigator.pushNamedAndRemoveUntil(context,'home',(r)=>false);
+  
+Future<void> _cadastrar() async {
+  if (!_form.currentState!.validate()) return;
+
+  final erro = await _controller.cadastrar(
+    _nome.text,
+    _email.text,
+    _fone.text,
+    _senha.text,
+    _conf.text,
+  );
+
+  if (!mounted) return;
+
+  if (erro != null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(erro)),
+    );
+    return;
   }
+
+  Navigator.pushNamedAndRemoveUntil(
+    context,
+    'home',
+    (route) => false,
+  );
+}
+
 
   @override 
   Widget build(BuildContext context) {

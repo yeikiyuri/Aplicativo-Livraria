@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
 import 'package:device_preview_plus/device_preview_plus.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 import 'view/cadastro_usuario_view.dart';
 import 'view/home_view.dart';
@@ -10,12 +12,21 @@ import 'view/perfil_view.dart';
 import 'view/recuperar_senha_view.dart';
 import 'view/sobre_view.dart';
 
-void main() => runApp(
-  DevicePreview(
-    enabled: !kReleaseMode,
-    builder: (context) => const MainApp(),
-  ),
-);
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => const MainApp(),
+    ),
+  );
+}
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

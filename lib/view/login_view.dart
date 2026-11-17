@@ -14,15 +14,27 @@ class _LoginViewState extends State<LoginView>{
   final _senha=TextEditingController(); 
   final _controller=LoginController();
    bool _obscure=true;
-  void _entrar(){
-    if(!_form.currentState!.validate())return; 
-      final erro=_controller.entrar(_email.text,_senha.text); 
-    if(erro!=null){
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(erro)));
-      return;
-    } 
-    Navigator.pushReplacementNamed(context,'home');
+  
+Future<void> _entrar() async {
+  if (!_form.currentState!.validate()) return;
+
+  final erro = await _controller.entrar(
+    _email.text,
+    _senha.text,
+  );
+
+  if (!mounted) return;
+
+  if (erro != null) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(erro)),
+    );
+    return;
   }
+
+  Navigator.pushReplacementNamed(context, 'home');
+}
+
   @override 
   void dispose(){
     _email.dispose();

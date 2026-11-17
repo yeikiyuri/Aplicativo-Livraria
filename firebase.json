@@ -1,0 +1,37 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "aplicativo-livraria",
+          "appId": "1:882896106464:android:51fc3f5cd1ef7f7d5db185",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "aplicativo-livraria",
+          "configurations": {
+            "android": "1:882896106464:android:51fc3f5cd1ef7f7d5db185",
+            "ios": "1:882896106464:ios:10f2906a0df3e7fe5db185",
+            "web": "1:882896106464:web:127c01787c095eee5db185"
+          }
+        }
+      }
+    }
+  },
+  "hosting": {
+    "public": "build/web",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

@@ -60,10 +60,20 @@ class _PerfilViewState extends State<PerfilView>{
               const SizedBox(height:22),
               FilledButton(
                 style:FilledButton.styleFrom(backgroundColor:accent,padding:const EdgeInsets.all(15)),
-                onPressed:(){
-                  final e=_controller.salvarNome(_nome.text);
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content:Text(e??'Perfil atualizado.')));
+                
+                onPressed: () async {
+                  final erro = await _controller.salvarNome(_nome.text);
+
+                  if (!mounted) return;
+
+                  // ignore: use_build_context_synchronously
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(erro ?? 'Perfil atualizado.'),
+                    ),
+                  );
                 },
+
                 child:const Text('Salvar alterações')
               )
             ]
